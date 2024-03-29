@@ -1,0 +1,46 @@
+#!/usr/bin/php
+<?php
+
+declare(strict_types=1);
+
+use Muhsin\VK\Core\Database;
+use Muhsin\VK\Core\Query;
+
+require_once 'vendor/autoload.php';
+
+$config = require 'config.php';
+
+Database::init($config['database'], 'root', 'secret');
+
+$command = $argv[1] ?? '';
+
+switch ($command) {
+    case 'migrate':
+        /** @var Query[] $migrations */
+        $migrations = [
+            require 'migrations/create_users_table.php',
+        ];
+
+        foreach ($migrations as $migration) {
+            $migration->execute();
+        }
+
+        echo 'Finished migrating!';
+        break;
+    case 'empty':
+        $table = $argv[2] ?? false;
+
+        if ($table === false) {
+            echo 'Please provide table name!';
+            break;
+        }
+
+        Database::getInstance()->query("TRUNCATE `$table`")->execute();
+        echo 'Done!';
+        break;
+    default:
+        echo 'Unknown command!';
+        break;
+}
+
+echo PHP_EOL;

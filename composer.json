@@ -1,0 +1,17 @@
+{
+    "name": "muhsin/vk",
+    "autoload": {
+        "psr-4": {
+            "Muhsin\\VK\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "muxsin",
+            "email": "muxsin.shokirov@gmail.com"
+        }
+    ],
+    "require": {
+      "ext-pdo": "*"
+    }
+}
