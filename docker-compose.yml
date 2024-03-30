@@ -1,0 +1,20 @@
+version: "3.9"
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/opt/app
+    ports:
+      - 8000:80
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: vk
+      MYSQL_USER: vk
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+

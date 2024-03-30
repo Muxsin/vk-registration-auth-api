@@ -8,12 +8,13 @@
 
 ## Installation
 
-1. Run `composer install`
-2. Run `php ./marusia migrate`
+1. Run `docker-compose up --build -d --remove-orphans`
+1. Run `composer install` inside container
+1. Run `php ./marusia migrate` inside container
 
 ## Running
 
-1. Run `php -S localhost:8080 -t public`
+1. Run `docker-compose up --build -d --remove-orphans`
 2. Visit http://localhost:8080
 3. Enjoy!
 
@@ -41,4 +42,4 @@ For authorization provide the token in `Authorization` header. Format: `<jwt_tok
 
 ## Extra
 
-- You can run `php ./marusia empty <tablename>` to truncate table.
+- You can run `php ./marusia empty <tablename>` inside container to truncate table.

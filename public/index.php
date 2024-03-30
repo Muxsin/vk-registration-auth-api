@@ -15,8 +15,18 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 $config = require __DIR__ . '/../config.php';
 $secret = $config['secret_key'];
+$db_config = $config['database'];
 
-Database::init($config['database'], 'root', 'secret');
+Database::init(
+    [
+        'host' => $db_config['host'],
+        'port' => $db_config['port'],
+        'dbname' => $db_config['database'],
+        'charset' => $db_config['charset'],
+    ],
+    $db_config['username'],
+    $db_config['password']
+);
 Auth::init(new JWTManager('HS256', $secret), new User(Database::getInstance()));
 
 $router = new Router(require __DIR__ . '/../routes.php');
