@@ -20,6 +20,11 @@ class User
         return $this->db->query('SELECT * FROM Users WHERE id = :id', ['id' => $id])->findOrFail();
     }
 
+    public function getByEmail(string $email): false|array
+    {
+        return $this->db->query('SELECT * FROM Users WHERE email = :email', ['email' => $email])->findOrFail();
+    }
+
     public function create(string $email, string $password): string|array
     {
         $user = $this->db->query('SELECT * FROM Users WHERE email = :email', ['email' => $email])->find();
@@ -28,8 +33,8 @@ class User
             return "User with this email already exists.";
         }
 
-        $hashed_password = $password; // TODO
-        
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
         $id = $this->db->query(
             'INSERT INTO Users (email, password) VALUES (:email, :password)',
             ['email' => $email, 'password' => $hashed_password]
